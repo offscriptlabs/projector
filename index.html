@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Projector</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Investment Projector</h1>
+            <p class="subtitle">Calculate ownership, dilution, and exit valuations for venture capital investments</p>
+            <button id="export-excel-btn" class="export-btn header-export-btn" type="button">Export to Excel</button>
+        </header>
+
+        <main class="calculator">
+            <div class="input-section">
+                <h2>Initial Investment</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="initialRound">Round</label>
+                        <select id="initialRound">
+                            <option value="Pre-seed">Pre-seed</option>
+                            <option value="Seed">Seed</option>
+                            <option value="Series A">Series A</option>
+                            <option value="Series B">Series B</option>
+                            <option value="Series C">Series C</option>
+                            <option value="Series D">Series D</option>
+                            <option value="Series E">Series E</option>
+                            <option value="Series E+">Series E+</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="investment">Investment Amount ($)</label>
+                        <input type="text" id="investment" placeholder="1,000,000">
+                    </div>
+                    <div class="input-group">
+                        <label for="fundSize">Your Fund Size ($)</label>
+                        <input type="text" id="fundSize" placeholder="100,000,000">
+                    </div>
+                    <div class="input-group">
+                        <label for="preMoney">Pre-Money Valuation ($)</label>
+                        <input type="text" id="preMoney" placeholder="10,000,000">
+                    </div>
+                    <div class="input-group">
+                        <label for="roundSize">Round Size ($)</label>
+                        <input type="text" id="roundSize" placeholder="5,000,000">
+                    </div>
+                    <div class="input-group">
+                        <label for="postMoney">Post-Money Valuation ($)</label>
+                        <input type="text" id="postMoney" placeholder="15,000,000" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="initialOwnership">Initial Ownership (%)</label>
+                        <input type="text" id="initialOwnership" placeholder="6.7" readonly>
+                    </div>
+                    <div class="input-group" id="dilution-group">
+                        <label for="dilution">Expected Future Dilution (%)</label>
+                        <div class="slider-container">
+                            <input type="range" id="dilution" min="0" max="99" step="1" value="25">
+                            <input type="number" id="dilutionValue" min="0" max="99" value="25" class="slider-input">
+                            <span class="slider-unit">%</span>
+                        </div>
+                    </div>
+                    <div class="input-group" id="manual-dilution-group" style="display: none;">
+                        <label for="manualDilution">Additional Manual Dilution (%)</label>
+                        <div class="slider-container">
+                            <input type="range" id="manualDilution" min="0" max="99" step="1" value="0">
+                            <input type="number" id="manualDilutionValue" min="0" max="99" value="0" class="slider-input">
+                            <span class="slider-unit">%</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="show-rounds-btn" type="button">Model Specific Details</button>
+            </div>
+            <div class="rounds-section" style="display:none;">
+                <h2>Rounds</h2>
+                <div id="rounds-list">
+                    <!-- Rounds will be dynamically inserted here -->
+                </div>
+                <button id="add-round-btn" type="button">Add Round</button>
+                <button id="add-exit-btn" type="button">Add Exit</button>
+            </div>
+
+            <div class="exit-section" style="display:none;">
+                <h2>Exit Modeling</h2>
+                <div class="exit-card">
+                    <div>
+                        <label>Exit Valuation ($)</label>
+                        <input type="text" id="exitValuation" placeholder="1,000,000,000">
+                    </div>
+                    <div>
+                        <label>Final Ownership (%)</label>
+                        <input type="text" id="exitFinalOwnership" readonly>
+                    </div>
+                    <div>
+                        <label>Proceeds ($)</label>
+                        <input type="text" id="exitProceeds" readonly>
+                    </div>
+                    <div>
+                        <label>Multiple</label>
+                        <input type="text" id="exitMultiple" readonly>
+                    </div>
+                    <button id="remove-exit-btn" class="delete-round-btn" type="button" title="Remove exit modeling">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.5 8.5V14.5" stroke="#ff4d6d" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M10 8.5V14.5" stroke="#ff4d6d" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M13.5 8.5V14.5" stroke="#ff4d6d" stroke-width="1.5" stroke-linecap="round"/>
+                            <rect x="4.5" y="4.5" width="11" height="12" rx="2" stroke="#ff4d6d" stroke-width="1.5"/>
+                            <path d="M2.5 4.5H17.5" stroke="#ff4d6d" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M8.5 2.5H11.5" stroke="#ff4d6d" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Export Modal -->
+            <div id="exportModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <h3>Export to Excel</h3>
+                    <label for="companyNameInput">Company Name:</label>
+                    <input type="text" id="companyNameInput" placeholder="Enter company name">
+                    <div class="modal-actions">
+                        <button id="exportConfirmBtn" type="button">Export</button>
+                        <button id="exportCancelBtn" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <h2>Results</h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Final Ownership After Dilution (%)</div>
+                        <div class="result-value" id="dilutedOwnership">-</div>
+                    </div>
+                    
+                    <div class="result-card" id="totalInvestmentCard" style="display: none;">
+                        <div class="result-label">Total Investment ($)</div>
+                        <div class="result-value" id="totalInvestment">-</div>
+                    </div>
+                    
+                    <div class="result-card highlight">
+                        <div class="result-label">Exit Valuation to Return the Fund ($)</div>
+                        <div class="result-value" id="returnTheFundValuation">-</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="disclaimer">
+            <p>⚠️ Disclaimer: This calculator does not account for all dilution factors (e.g., ESOP, warrants, convertible notes). Use the manual dilution slider to adjust for additional dilution if needed.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
