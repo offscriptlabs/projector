@@ -1,4 +1,4 @@
-# 🧮 VC Calculator
+# 🧮 Investment Projector
 
 A modern web-based calculator for venture capitalists to estimate ownership, dilution, and exit valuations needed to return their fund.
 
@@ -61,7 +61,7 @@ roiMultiple = returnTheFundValuation / investment
 
 ## 📱 Usage
 
-1. Open `index.html` in any modern web browser
+1. Open `investment-projector.html` in any modern web browser
 2. Enter your investment parameters
 3. Watch results update in real-time
 4. Adjust the dilution slider to see different scenarios
@@ -84,8 +84,8 @@ roiMultiple = returnTheFundValuation / investment
 ## 🔧 Customization
 
 The calculator is built with vanilla web technologies, making it easy to:
-- Modify the calculation logic in `script.js`
-- Update the styling in `styles.css`
+- Modify the calculation logic in `investment-projector.js`
+- Update the styling in `investment-projector.css`
 - Add new input fields or output metrics
 - Deploy to any web server
 

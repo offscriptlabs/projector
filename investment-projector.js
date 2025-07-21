@@ -85,7 +85,8 @@ class VCCalculator {
         this.initialOwnershipOutput = document.getElementById('initialOwnership');
         this.dilutedOwnershipOutput = document.getElementById('dilutedOwnership');
         this.returnTheFundValuationOutput = document.getElementById('returnTheFundValuation');
-        this.totalInvestmentOutput = document.getElementById('totalInvestment');
+        this.returnOneThirdFundValuationOutput = document.getElementById("returnOneThirdFundValuation");
+        this.returnTwoThirdsFundValuationOutput = document.getElementById("returnTwoThirdsFundValuation");        this.totalInvestmentOutput = document.getElementById('totalInvestment');
         this.totalInvestmentCard = document.getElementById('totalInvestmentCard');
 
         // Export elements
@@ -429,7 +430,8 @@ class VCCalculator {
             this.initialRoundSelect.value = 'Pre-seed';
         }
         this.updateStageDefaults('Pre-seed');
-
+        // Ensure calculation happens after values are set
+        setTimeout(() => this.calculate(), 100);
         // Format fund size
         this.fundSizeInput.value = parseFloat(this.fundSizeInput.value).toLocaleString();
 
@@ -535,7 +537,9 @@ class VCCalculator {
 
             // Calculate exit valuation needed to return the fund
             const returnTheFundValuation = fundSize / (finalOwnership / 100);
-
+            // Calculate exit valuations for 1/3 and 2/3 of the fund
+            const returnOneThirdFundValuation = (fundSize / 3) / (finalOwnership / 100);
+            const returnTwoThirdsFundValuation = (fundSize * 2 / 3) / (finalOwnership / 100);
             // Show/hide total investment field based on whether rounds are being used
             if (this.roundsSection && this.roundsSection.style.display !== 'none' && this.rounds.length > 0) {
                 // Calculate total investment
@@ -562,7 +566,8 @@ class VCCalculator {
             // Update results with animation
             this.updateResult(this.dilutedOwnershipOutput, this.formatPercentage(finalOwnership));
             this.updateResult(this.returnTheFundValuationOutput, this.formatUSD(returnTheFundValuation));
-            
+            this.updateResult(this.returnOneThirdFundValuationOutput, this.formatUSD(returnOneThirdFundValuation));
+            this.updateResult(this.returnTwoThirdsFundValuationOutput, this.formatUSD(returnTwoThirdsFundValuation));            
             // Update exit calculations if exit is being modeled
             if (this.exitData) {
                 this.calculateExitValues();
@@ -583,7 +588,8 @@ class VCCalculator {
     clearResults() {
         this.dilutedOwnershipOutput.textContent = '-';
         this.returnTheFundValuationOutput.textContent = '-';
-        if (this.totalInvestmentOutput) {
+        this.returnOneThirdFundValuationOutput.textContent = '-';
+        this.returnTwoThirdsFundValuationOutput.textContent = '-';        if (this.totalInvestmentOutput) {
             this.totalInvestmentOutput.textContent = '-';
         }
     }
@@ -1063,7 +1069,8 @@ class VCCalculator {
             ['Final Ownership (%)', this.dilutedOwnershipOutput ? this.dilutedOwnershipOutput.textContent : ''],
             ['Total Investment', this.totalInvestmentOutput ? this.totalInvestmentOutput.textContent : ''],
             ['Exit Valuation to Return the Fund', this.returnTheFundValuationOutput ? this.returnTheFundValuationOutput.textContent : ''],
-        ];
+            ["Exit Valuation to Return 1/3 of Fund", this.returnOneThirdFundValuationOutput ? this.returnOneThirdFundValuationOutput.textContent : ""],
+            ["Exit Valuation to Return 2/3 of Fund", this.returnTwoThirdsFundValuationOutput ? this.returnTwoThirdsFundValuationOutput.textContent : ""],        ];
         // Rounds table
         const roundsHeader = ['Round', 'Pre-Money Valuation', 'Round Size', 'Follow-on Investment', 'Ownership (%)', 'Pro Rata?'];
         const roundsRows = this.rounds.map(r => [

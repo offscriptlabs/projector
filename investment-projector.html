@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Investment Projector</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="investment-projector.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -59,8 +59,8 @@
                     <div class="input-group" id="dilution-group">
                         <label for="dilution">Expected Future Dilution (%)</label>
                         <div class="slider-container">
-                            <input type="range" id="dilution" min="0" max="99" step="1" value="25">
-                            <input type="number" id="dilutionValue" min="0" max="99" value="25" class="slider-input">
+                            <input type="range" id="dilution" min="0" max="99" step="1" value="0">
+                            <input type="number" id="dilutionValue" min="0" max="99" value="0" class="slider-input">
                             <span class="slider-unit">%</span>
                         </div>
                     </div>
@@ -142,19 +142,32 @@
                         <div class="result-value" id="totalInvestment">-</div>
                     </div>
                     
-                    <div class="result-card highlight">
-                        <div class="result-label">Exit Valuation to Return the Fund ($)</div>
-                        <div class="result-value" id="returnTheFundValuation">-</div>
                     </div>
-                </div>
+                    </div>
+                    </div>                </div>
             </div>
         </main>
         
-        <footer class="disclaimer">
+        <section class="exit-valuations-section">
+            <div class="exit-valuations-grid">
+                <div class="exit-valuation-card">
+                    <div class="exit-valuation-value" class="exit-valuation-value" id="returnOneThirdFundValuation">-</div>
+                    <div class="fund-title">1/3 Fund</div>
+                </div>
+                <div class="exit-valuation-card">
+                    <div class="exit-valuation-value" class="exit-valuation-value" id="returnTwoThirdsFundValuation">-</div>
+                    <div class="fund-title">2/3 Fund</div>
+                </div>
+                <div class="exit-valuation-card highlight">
+                    <div class="exit-valuation-value" class="exit-valuation-value" id="returnTheFundValuation">-</div>
+                    <div class="fund-title">Full Fund</div>
+                </div>
+            </div>
+        </section>        <footer class="disclaimer">
             <p>⚠️ Disclaimer: This calculator does not account for all dilution factors (e.g., ESOP, warrants, convertible notes). Use the manual dilution slider to adjust for additional dilution if needed.</p>
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script src="investment-projector.js"></script>
 </body>
 </html> 
