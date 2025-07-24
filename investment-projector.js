@@ -2,17 +2,22 @@
 class VCCalculator {
     constructor() {
         this.roundTypes = [
-            'Pre-seed', 'Seed', 'Series A', 'Series B', 'Series C', 'Series D', 'Series E', 'Series E+'
+            'Pre-seed', 'Seed', 'Seed+', 'Series A', 'Series A+', 'Series B', 'Series B+', 'Series C', 'Series C+', 'Series D', 'Series D+', 'Series E', 'Series E+'
         ];
         
         // Default values for each stage
         this.stageDefaults = {
             'Pre-seed': { roundSize: 650000, valuation: 7000000, investment: 500000 },
             'Seed': { roundSize: 3325000, valuation: 13300000, investment: 1000000 },
+            'Seed+': { roundSize: 3325000, valuation: 13300000, investment: 1000000 },
             'Series A': { roundSize: 10000000, valuation: 40000000, investment: 2000000 },
+            'Series A+': { roundSize: 10000000, valuation: 40000000, investment: 2000000 },
             'Series B': { roundSize: 18000000, valuation: 90000000, investment: 3000000 },
+            'Series B+': { roundSize: 18000000, valuation: 90000000, investment: 3000000 },
             'Series C': { roundSize: 23000000, valuation: 158000000, investment: 4000000 },
+            'Series C+': { roundSize: 23000000, valuation: 158000000, investment: 4000000 },
             'Series D': { roundSize: 33000000, valuation: 376000000, investment: 5000000 },
+            'Series D+': { roundSize: 33000000, valuation: 376000000, investment: 5000000 },
             'Series E': { roundSize: 37000000, valuation: 420000000, investment: 6000000 },
             'Series E+': { roundSize: 37000000, valuation: 420000000, investment: 7000000 }
         };
