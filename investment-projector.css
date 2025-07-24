@@ -25,6 +25,8 @@ body {
     margin-bottom: 2.5rem;
     color: #f5f6fa;
     position: relative;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .header h1 {
